@@ -1,0 +1,243 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('../images/530fb3b998839266fae1c1747f8b347c.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%;
+    max-width: 800px;
+}
+
+.game-title h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #f9d342;
+}
+
+.hangman img {
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.word-display h2 {
+    font-size: 2em;
+    letter-spacing: 15px;
+    margin-bottom: 30px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #f9d342;
+    }
+    to {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #f9d342;
+    }
+}
+
+.boutton {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    justify-content: center;
+}
+
+.boutton button {
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    background-color: #f9d342;
+    color: black;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.boutton button:hover {
+    background-color: #ffd700;
+    transform: scale(1.1);
+}
+
+.boutton button:disabled {
+    opacity: 0.6;
+    transform: scale(0.95);
+    background-color: #808080;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: scale(0.95) translateX(0); }
+    25% { transform: scale(0.95) translateX(-5px); }
+    75% { transform: scale(0.95) translateX(5px); }
+}
+
+/* Animation pour la victoire */
+@keyframes victory {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.victory {
+    animation: victory 0.5s ease-in-out;
+}
+
+/* Animation pour la défaite */
+@keyframes defeat {
+    0% { transform: translateY(0); }
+    25% { transform: translateY(-10px); }
+    75% { transform: translateY(10px); }
+    100% { transform: translateY(0); }
+}
+
+.defeat {
+    animation: defeat 0.5s ease-in-out;
+}
+
+/* Animation pour le canvas */
+#hangman-canvas {
+    transition: all 0.3s ease;
+}
+
+#hangman-canvas:hover {
+    transform: scale(1.02);
+}
+
+/* Animation pour les lettres révélées */
+.revealed {
+    display: inline-block;
+    animation: revealLetter 0.5s ease-out;
+    color: #f9d342;
+}
+
+@keyframes revealLetter {
+    0% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* Styles pour la modal */
+.game-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 0 20px rgba(249, 211, 66, 0.3);
+    animation: modalAppear 0.5s ease-out;
+}
+
+@keyframes modalAppear {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    color: #f9d342;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(249, 211, 66, 0.5);
+}
+
+.modal-content p {
+    color: white;
+    font-size: 1.2em;
+    margin-bottom: 25px;
+}
+
+.modal-content .word-reveal {
+    color: #f9d342;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 25px;
+    letter-spacing: 3px;
+}
+
+.play-again-btn {
+    background-color: #f9d342;
+    color: #1a1a1a;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.2em;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.play-again-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(249, 211, 66, 0.5);
+}
+
+.modal-content.victory {
+    border: 3px solid #4CAF50;
+}
+
+.modal-content.defeat {
+    border: 3px solid #f44336;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #f9d342;
+    animation: confetti 1s ease-in-out infinite;
+}
+
+@keyframes confetti {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
