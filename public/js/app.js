@@ -174,15 +174,21 @@ function updateWordDisplay() {
 
 function handleGuess(event) {
     let letter = event.target.textContent;
-    event.target.disabled = true;
+    let button = event.target;
+    
+    // Ajoute la classe clicked pour l'animation de clic
+    button.classList.add('clicked');
+    setTimeout(() => button.classList.remove('clicked'), 300);
+    
+    button.disabled = true;
 
     if (selectedWord.includes(letter)) {
         guessedLetters.push(letter);
-        event.target.style.backgroundColor = "#4CAF50";
+        button.classList.add('correct');
     } else {
         wrongGuesses++;
+        button.classList.add('incorrect');
         drawHangman(wrongGuesses);
-        event.target.style.backgroundColor = "#f44336";
     }
 
     updateWordDisplay();
@@ -205,9 +211,23 @@ function checkGameStatus() {
     }
 }
 
-// Initialisation
+// Ajoute l'effet de survol sur les boutons
 buttons.forEach(button => {
-    button.addEventListener("click", handleGuess);
+    button.addEventListener('mouseover', () => {
+        if (!button.disabled) {
+            button.style.transform = 'translateY(-3px) scale(1.05)';
+        }
+    });
+
+    button.addEventListener('mouseout', () => {
+        if (!button.disabled) {
+            button.style.transform = 'translateY(0) scale(1)';
+        }
+    });
+
+    button.addEventListener('click', handleGuess);
 });
+
+// Initialisation
 drawBase();
 updateWordDisplay();

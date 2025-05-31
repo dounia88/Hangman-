@@ -57,38 +57,108 @@ body {
 .boutton {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
+    gap: 12px;
     justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    margin-top: 30px;
 }
 
 .boutton button {
-    padding: 10px;
-    font-size: 18px;
+    position: relative;
+    padding: 15px 0;
+    font-size: 20px;
+    font-weight: bold;
     border: none;
-    background-color: #f9d342;
-    color: black;
+    background: linear-gradient(135deg, #f9d342 0%, #ffd700 100%);
+    color: #1a1a1a;
     cursor: pointer;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    transform-origin: center;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(249, 211, 66, 0.3);
+    overflow: hidden;
+}
+
+.boutton button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: 0.5s;
 }
 
 .boutton button:hover {
-    background-color: #ffd700;
-    transform: scale(1.1);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(249, 211, 66, 0.4);
+}
+
+.boutton button:hover::before {
+    left: 100%;
+}
+
+.boutton button:active {
+    transform: translateY(2px) scale(0.95);
+    box-shadow: 0 2px 10px rgba(249, 211, 66, 0.2);
 }
 
 .boutton button:disabled {
-    opacity: 0.6;
+    cursor: not-allowed;
     transform: scale(0.95);
-    background-color: #808080;
-    animation: shake 0.5s ease-in-out;
+    opacity: 0.7;
 }
 
-@keyframes shake {
-    0%, 100% { transform: scale(0.95) translateX(0); }
-    25% { transform: scale(0.95) translateX(-5px); }
-    75% { transform: scale(0.95) translateX(5px); }
+/* Style pour les boutons corrects */
+.boutton button.correct {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+/* Style pour les boutons incorrects */
+.boutton button.incorrect {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+}
+
+/* Animation pour les boutons cliqués */
+@keyframes buttonClick {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+.boutton button.clicked {
+    animation: buttonClick 0.3s ease-out;
+}
+
+/* Effet de brillance sur hover */
+.boutton button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.boutton button:hover::after {
+    opacity: 1;
 }
 
 /* Animation pour la victoire */
